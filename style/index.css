@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+    
+}
+
+header{
+    display: flex;
+    flex-flow: row wrap;
+    margin: auto auto;
+    justify-content: center;
+}
+
+#user{
+    width: 70%;
+    height: 40px;
+    padding-left: 20px;
+    font-size: 1.2rem;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid lightgray;
+}
+
+#btn{
+    width: 30%;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+    font-size: 1.2rem;
+    border: 1px solid lightgray;
+    background-color: green;
+    color: lightcyan;
+    cursor: pointer;
+}
+
+
+/* MAIN */
+
+#conteudo{
+    margin-top: 50px;
+}
+
+#login{
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: underline;
+}
