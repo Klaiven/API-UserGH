@@ -28,14 +28,21 @@ function pesquisar() {
                 let avatar = respostaConvertida.avatar_url;
 
                 // Atualize os elementos no DOM com os dados da API
-                document.getElementById('login').innerHTML = respostaConvertida.login;
-                document.getElementById('followers').innerHTML = respostaConvertida.followers;
-                document.getElementById('following').innerHTML = respostaConvertida.following;
-                document.getElementById('img').src = avatar;
-                    if(respostaConvertida.bio != null && respostaConvertida.bio != "" && respostaConvertida != " "){
-                        document.getElementById('descricao').innerHTML = respostaConvertida.bio;
+                    if(respostaConvertida.login != undefined){
+                        document.getElementById('login').innerHTML = respostaConvertida.login;
+                        document.getElementById('followers').innerHTML = respostaConvertida.followers;
+                        document.getElementById('following').innerHTML = respostaConvertida.following;
+                        document.getElementById('img').src = avatar;
+                            if(respostaConvertida.bio != null && respostaConvertida.bio != "" && respostaConvertida != " "){
+                                document.getElementById('descricao').innerHTML = respostaConvertida.bio;
+                            }else{
+                                document.getElementById('descricao').innerHTML = "* Sem Descrição *";
+                            }
                     }else{
-                        document.getElementById('descricao').innerHTML = "* Sem Descrição *";
+                        let errouser = document.getElementById('user');
+                        errouser.classList.add('nouser');
+                        let errobtn = document.getElementById('btn');
+                        errobtn.classList.add('nouser');
                     }
             })
             .catch(function (error) {

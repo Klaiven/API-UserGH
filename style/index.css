@@ -28,6 +28,7 @@ header{
     border: 1px solid lightgray;
 }
 
+
 #btn{
     width: 30%;
     height: 40px;
@@ -39,6 +40,15 @@ header{
     cursor: pointer;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.nouser{
+    border: 1px solid red !important;
+    box-shadow: 0 0 20px red;
+}
+
+.nouser:focus{
+    outline-color:  red;
 }
 
 #btn:hover{
@@ -92,7 +102,6 @@ section{
     flex-direction: column;
     text-align: center;
     font-size: 1.2rem;
-    /* border: 1px solid black; */
 }
 
 #login{
