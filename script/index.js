@@ -1,52 +1,59 @@
 let user = document.getElementById('user');
 let btn = document.getElementById('btn');
 let main = document.getElementById('conteudo');
-let image = document.getElementById('img')
 
-function pesquisar(){
-    
-    if((user !== "") && (user !== null) && (user !== undefined)){
+function pesquisar() {
+    const userName = user.value; // Obtém o valor do campo de entrada
 
+    if (userName) { // Verifica se o nome de usuário não está vazio
         const perfil = `<section>
-        <img src="" alt="User Image" id="img">
-        <aside>
-            <p id="login">User</p>
-    
-            <div class="seg">
-                <p> <span id="followers"></span> Seguidores</p>
-                <p> <span id="following"></span>Seguindo</p>
-            </div>
-    
-            <p id="gen">Descrição: <span id="descricao"></span></p>
-        </aside>
+            <img src="" alt="User Image" id="img">
+            <aside>
+                <p id="login">User</p>
+                <div class="seg">
+                    <p> <span id="followers"></span> Seguidores</p>
+                    <p> <span id="following"></span> Seguindo</p>
+                </div>
+                <p id="gen">Descrição: <span id="descricao"></span></p>
+            </aside>
         </section>`;
 
-        const dados = fetch('https://api.github.com/users/' + user.value)
-        .then(function(respostaServidor){
-            return respostaServidor.json()
-        })
-        .then(function(respostaConvertida){
-            console.log(respostaConvertida);
+        fetch('https://api.github.com/users/' + userName)
+            .then(function (respostaServidor) {
+                return respostaServidor.json();
+            })
+            .then(function (respostaConvertida) {
+                console.log(respostaConvertida);
 
-            document.getElementById('login').innerHTML = respostaConvertida.login;
+                let avatar = respostaConvertida.avatar_url;
 
-            document.getElementById('followers').innerHTML = respostaConvertida.followers;
+                // Atualize os elementos no DOM com os dados da API
+                document.getElementById('login').innerHTML = respostaConvertida.login;
+                document.getElementById('followers').innerHTML = respostaConvertida.followers;
+                document.getElementById('following').innerHTML = respostaConvertida.following;
+                document.getElementById('img').src = avatar;
+                    if(respostaConvertida.bio != null && respostaConvertida.bio != "" && respostaConvertida != " "){
+                        document.getElementById('descricao').innerHTML = respostaConvertida.bio;
+                    }else{
+                        document.getElementById('descricao').innerHTML = "* Sem Descrição *";
+                    }
+            })
+            .catch(function (error) {
+                console.error("Erro na requisição: " + error);
+            });
 
-            document.getElementById('following').innerHTML = respostaConvertida.following;
-
-            document.getElementById('descricao').innerHTML = respostaConvertida.bio;
-            
-        })
-        
         main.innerHTML = perfil;
-        
-        console.log(respostaConvertida.bio);
+
     }
 }
 
-user.addEventListener("keyup", function(event){
-    if(event.keyCode === 13){
+
+
+
+
+user.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
         event.preventDefault();
-        btn.click();
+        pesquisar(); // Chame a função pesquisar ao pressionar Enter
     }
-})
+});
