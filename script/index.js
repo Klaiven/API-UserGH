@@ -1,6 +1,7 @@
 let user = document.getElementById('user');
 let btn = document.getElementById('btn');
 let main = document.getElementById('conteudo');
+let dialog = document.getElementById('popup');
 
 function pesquisar() {
     const userName = user.value; // Obtém o valor do campo de entrada
@@ -27,14 +28,14 @@ function pesquisar() {
                     <aside>
                         <p id="login">User</p>
                         <div class="seg">
-                            <p> <span id="followers"></span> Seguidores</p>
+                            <p onclick="seguidores()"> <span id="followers"></span> Seguidores</p>
                             <p> <span id="following"></span> Seguindo</p>
                         </div>
                         <p id="gen">Descrição: <span id="descricao"></span></p>
                     </aside>
                 </section>`;
 
-            main.innerHTML = perfil;
+                main.innerHTML = perfil;
 
                 document.getElementById('login').innerHTML = respostaConvertida.login;
                 document.getElementById('followers').innerHTML = respostaConvertida.followers;
@@ -45,6 +46,8 @@ function pesquisar() {
                     }else{
                         document.getElementById('descricao').innerHTML = "* Sem Descrição *";
                     }
+
+                
             }else{
 
                 let errouser = document.getElementById('user');
@@ -65,8 +68,51 @@ function pesquisar() {
         })     
 }
 
+function seguidores(){
 
+    const userName = user.value;
 
+    dialog.showModal();
+    
+    fetch('https://api.github.com/users/'+userName+'/followers')
+    .then(function (seguidoresConvertidos) {
+        return seguidoresConvertidos.json();
+    })
+    .then(function (seguidoresConvertidos) {
+        console.log(seguidoresConvertidos);
+
+        for(let count = 0; count <= seguidoresConvertidos.length ; count++ ){
+
+            
+            let usuario = seguidoresConvertidos[count].login
+            let avatar = seguidoresConvertidos[count].avatar_url
+            
+            console.log(avatar)
+
+            const contagem = `
+
+                <div> 
+                
+                <img src="${avatar}" alt="User Image" id="segimg">
+                <p>${usuario}</p>
+                
+                <a href="https://github.com/${usuario}" target="_blank">
+                <ion-icon name="logo-github"></ion-icon>
+                </a>
+                
+                </div>
+
+            `
+
+            
+
+            dialog.innerHTML += contagem;
+            
+        }
+
+    })
+    dialog.innerHTML = "<h2>Seguidores</h2>";
+}
 
 
 
